@@ -7,7 +7,7 @@
 /**
  * create linklist
  */
-LinkList create_linkList()
+LinkList create_linklist()
 {
     int length;
     int data;
@@ -51,9 +51,9 @@ LinkList create_linkList()
  * traverse linklist
  * @param p_head : head pointer of linklist
  */
-void traverse_linkList(LinkList p_head)
+void traverse_linklist(LinkList p_head)
 {
-    printf("============开始遍历链表=============\n");
+    printf("============遍历链表=============\n");
 
     if (p_head == NULL || p_head->next == NULL) {
         printf("链表为空\n");
@@ -66,8 +66,6 @@ void traverse_linkList(LinkList p_head)
         printf("存储数据值：%d, 存储的指针值：%p\n ", p_current->data, p_current->next);
         p_current = p_current->next; //移动当前节点
     }
-
-    printf("============结束遍历链表=============\n");
 }
 /**
  * get the elements length of linklist
@@ -88,7 +86,7 @@ int get_length(LinkList p_head)
         len++;
         p_current = p_current->next;
     };
-    printf("链表长度为: %d\n", len);
+
     return len;
 }
 
@@ -100,6 +98,8 @@ int get_length(LinkList p_head)
  */
 LinkList find_element(LinkList p_head, int value)
 {
+    printf("============查找链表元素%d=============\n", value);
+
     if (p_head == NULL || p_head->next == NULL) {
         printf("链表不存在\n");
         return NULL;
@@ -119,6 +119,155 @@ LinkList find_element(LinkList p_head, int value)
     };
 
     return NULL;
+}
+
+/**
+ * insert element into linklist
+ * @param p_head
+ * @param position insert position is position + 1
+ * @param value
+ * @return
+ */
+bool insert_element(LinkList p_head, int position, int value)
+{
+    printf("============插入链表元素%d=============\n", value);
+
+    if (p_head == NULL || p_head->next == NULL) {
+        printf("失败，链表不存在\n");
+        return false;
+    }
+
+    int length = get_length(p_head);
+    if (position < 0 || position > length) {
+        printf("失败，链表插入元素位置范围为1～链表长度：1～%d\n", length);
+        return false;
+    }
+
+    int index = 0;
+
+    LinkList p_current = p_head;
+
+    while (p_current != NULL) {
+        if (index == position - 1) {
+            LinkList p_new = (LinkList)malloc(sizeof(Node));
+            if (NULL == p_new) {
+                printf("内存分配失败，程序退出！\n");
+                exit(-1);
+            }
+            p_new->data = value;
+            p_new->next = p_current->next;
+            p_current->next = p_new;
+            printf("成功插入第%d个节点，存储数据值：%d, 存储的指针值：%p\n ", position, p_new->data, p_new->next);
+            return true;
+        }
+        index++;
+        p_current = p_current->next;
+    };
+
+    return false;
+}
+
+/**
+ * delete element of linklist
+ * @param p_head
+ * @param position
+ * @param value
+ * @return
+ */
+bool delete_element(LinkList p_head, int position, int *value)
+{
+
+    if (p_head == NULL || p_head->next == NULL) {
+        printf("链表不存在\n");
+        return false;
+    }
+
+    int length = get_length(p_head);
+    if (position < 0 || position > length) {
+        printf("链表删除元素位置范围为1～链表长度：1～%d\n", length);
+        return false;
+    }
+
+    int index = 0;
+
+    LinkList p_current = p_head->next, p_pre = p_head;
+
+    while (p_current != NULL) {
+        if (index == position - 1) {
+            p_pre->next = p_current->next;
+            *value = p_current->data;
+            free(p_current);
+            printf("成功删除第%d个节点", position);
+            return true;
+        }
+        index++;
+        p_current = p_current->next;
+        p_pre = p_pre->next;
+    };
+
+    return false;
+
+}
+
+/**
+ * reverse linklist
+ * @param p_head head pointer of linklist
+ * @return head pointer of reversed linklist
+ */
+LinkList reverse_linklist(LinkList p_head)
+{
+    if (p_head == NULL || p_head->next == NULL) {
+        printf("链表不存在\n");
+        return NULL;
+    }
+    //初始化前驱，当前，后继节点
+    LinkList p_pre = p_head->next;
+    LinkList p_current = p_head->next->next;
+    LinkList p_tmp = NULL;
+
+    while (p_current != NULL) {
+        //重置指针
+        p_tmp = p_current->next;
+        p_current->next = p_pre;
+        //交换节点：前驱->当前，当前->后继
+        p_pre = p_current;
+        p_current = p_tmp;
+    }
+
+    p_head->next->next = NULL;
+    p_head->next = p_pre;
+    printf("反转链表结束\n");
+    return p_current;
+}
+
+/**
+ * bubble sort linklist
+ * @param p_head head pointer of linklist
+ */
+LinkList sort(LinkList p_head)
+{
+    if (p_head == NULL || p_head->next == NULL) {
+        printf("链表不存在\n");
+    }
+
+    int length = get_length(p_head);
+    int i;
+
+    LinkList p_tmp = NULL;
+    LinkList p_current = p_head->next;
+
+    for (i = 0; i < length-1; i++) {
+        for (int j = 0; j < length-1-i; j++) {
+            if(p_current->data > p_current->next->data) {
+                p_tmp = p_current;
+                p_current = p_current->next;
+                p_current->next = p_tmp;
+            }
+        }
+    }
+
+    return p_head;
+
 }
 
 /**

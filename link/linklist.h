@@ -1,15 +1,17 @@
+#include <stdbool.h>
+
 #ifndef LINK_H
 #define LINK_H
-#include <stdbool.h>
+
 typedef struct Node {
     int data;
     struct Node *next;
 } Node, *LinkList; //Node等价于struct Node, LinkList等价于struct Node *
 
 
-LinkList create_linkList();
+LinkList create_linklist();
 
-void traverse_linkList(LinkList p_head);
+void traverse_linklist(LinkList p_head);
 
 int get_length(LinkList p_head);
 
@@ -22,4 +24,7 @@ bool insert_element(LinkList p_head, int position, int value);
 bool delete_element(LinkList p_head, int position, int *value);
 
 LinkList reverse_linklist(LinkList p_head);
+
+LinkList sort(LinkList p_head);
+
 #endif
