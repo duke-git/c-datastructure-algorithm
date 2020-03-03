@@ -98,8 +98,6 @@ int get_length(LinkList p_head)
  */
 LinkList find_element(LinkList p_head, int value)
 {
-    printf("============查找链表元素%d=============\n", value);
-
     if (p_head == NULL || p_head->next == NULL) {
         printf("链表不存在\n");
         return NULL;
@@ -150,7 +148,7 @@ bool insert_element(LinkList p_head, int position, int value)
     while (p_current != NULL) {
         if (index == position - 1) {
             LinkList p_new = (LinkList)malloc(sizeof(Node));
-            if (NULL == p_new) {
+            if (p_new == NULL) {
                 printf("内存分配失败，程序退出！\n");
                 exit(-1);
             }
@@ -269,6 +267,42 @@ LinkList sort(LinkList p_head)
     return p_head;
 
 }
+
+/**
+ * Delete the element of position n in reverse order
+ * leetcode 19
+ * @param p_head : linklist head
+ * @param n : position n in reverse order
+ * @return linklist head
+ */
+LinkList delete_after_n(LinkList p_head, int n)
+{
+    if (p_head == NULL || p_head->next == NULL) {
+        printf("链表不存在\n");
+        return NULL;
+    }
+    LinkList p_pre = p_head, p_current = p_head;
+    int i = 0;
+
+    while (p_current->next != NULL) {
+        i++;
+        p_current = p_current->next;
+        if (i > n) {
+            p_pre = p_pre->next;
+        }
+    }
+
+    if (i < n) {
+        p_head = p_head->next;
+        return p_head;
+    }
+
+    LinkList p_delete = p_pre->next;
+    p_pre->next = p_delete->next;
+
+    return p_head;
+}
+
 
 /**
  *

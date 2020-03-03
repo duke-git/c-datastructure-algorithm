@@ -27,4 +27,6 @@ LinkList reverse_linklist(LinkList p_head);
 
 LinkList sort(LinkList p_head);
 
+LinkList delete_after_n(LinkList p_head, int n);
+
 #endif

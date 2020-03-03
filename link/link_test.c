@@ -18,7 +18,7 @@ void do_command()
     do
     {
         printf("==============================操作选择==============================\n");
-        printf("1.创建列表\t2.遍历链表\t3.查找链表元素\n4.插入链表元素\t5.删除链表元素\t6.排序链表\n7.反置链表\t8.返回链表长度\n");
+        printf("1.创建列表\t2.遍历链表\t3.查找链表元素\n4.插入链表元素\t5.删除链表元素\t6.排序链表\n7.反置链表\t8.删除链表倒数第n个元素\n");
         printf("==============================操作选择==============================\n");
 
         printf("请输入你的选择:");
@@ -88,7 +88,11 @@ void do_command()
             }
             case 8:
             {
-                get_length(p_head);
+                int index;
+                printf("请输入删除倒数第几个值: \n");
+                scanf("%d", &index);
+                delete_after_n(p_head, index);
+                traverse_linklist(p_head);
                 break;
             }
 
