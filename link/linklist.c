@@ -5,7 +5,7 @@
 
 
 /**
- * create linklist
+ * Create linklist
  */
 LinkList create_linklist()
 {
@@ -16,7 +16,7 @@ LinkList create_linklist()
     //创建头节点
     LinkList p_head = (LinkList) malloc(sizeof(Node));
 
-    if (NULL == p_head) {
+    if (p_head == NULL) {
         printf("内存分配失败，程序退出！\n");
         exit(-1);
     }
@@ -32,7 +32,7 @@ LinkList create_linklist()
         printf("请输入第%d个结点的值：", i+1);
         scanf("%d", &data);
         LinkList p_new = (LinkList)malloc(sizeof(Node));
-        if(NULL == p_new) {
+        if(p_new == NULL) {
             printf("内存分配失败，程序退出！\n");
             exit(-1);
         }
@@ -48,7 +48,7 @@ LinkList create_linklist()
 }
 
 /**
- * traverse linklist
+ * Traverse linklist
  * @param p_head : head pointer of linklist
  */
 void traverse_linklist(LinkList p_head)
@@ -68,7 +68,7 @@ void traverse_linklist(LinkList p_head)
     }
 }
 /**
- * get the elements length of linklist
+ * Get the elements length of linklist
  * @param p_head : head pointer of linklist
  * @return
  */
@@ -76,7 +76,7 @@ int get_length(LinkList p_head)
 {
     int len = 0;
 
-    if (p_head == NULL || p_head->next == NULL) {
+    if (p_head == NULL) {
         printf("链表不存在\n");
         return len;
     }
@@ -91,7 +91,7 @@ int get_length(LinkList p_head)
 }
 
 /**
- * find element in linklist
+ * Find element in linklist
  * @param p_head header pointer of linklist
  * @param value the find value
  * @return the find node
@@ -120,7 +120,7 @@ LinkList find_element(LinkList p_head, int value)
 }
 
 /**
- * insert element into linklist
+ * Insert element into linklist
  * @param p_head
  * @param position insert position is position + 1
  * @param value
@@ -130,7 +130,7 @@ bool insert_element(LinkList p_head, int position, int value)
 {
     printf("============插入链表元素%d=============\n", value);
 
-    if (p_head == NULL || p_head->next == NULL) {
+    if (p_head == NULL) {
         printf("失败，链表不存在\n");
         return false;
     }
@@ -166,7 +166,7 @@ bool insert_element(LinkList p_head, int position, int value)
 }
 
 /**
- * delete element of linklist
+ * Delete element of linklist
  * @param p_head
  * @param position
  * @param value
@@ -208,7 +208,7 @@ bool delete_element(LinkList p_head, int position, int *value)
 }
 
 /**
- * reverse linklist
+ * Reverse linklist
  * @param p_head head pointer of linklist
  * @return head pointer of reversed linklist
  */
@@ -239,7 +239,7 @@ LinkList reverse_linklist(LinkList p_head)
 }
 
 /**
- * bubble sort linklist
+ * Bubble sort linklist
  * @param p_head head pointer of linklist
  */
 LinkList sort(LinkList p_head)
@@ -303,11 +303,105 @@ LinkList delete_after_n(LinkList p_head, int n)
     return p_head;
 }
 
+/**
+ * Merge two sorted linklist
+ * @param link_1
+ * @param link_2
+ * @return merged linklist
+ */
+LinkList merge_sorted_link(LinkList link_1, LinkList link_2)
+{
+    if (is_empty(link_1) == true && is_empty(link_2) == true) {
+        return NULL;
+    }
+    if (is_empty(link_1) == true) {
+        return link_2;
+    }
+    if (is_empty(link_2) == true) {
+        return link_1;
+    }
+
+    LinkList p_cur_1 = link_1->next;
+    LinkList p_cur_2 = link_2->next;
+
+    int len1 = get_length(link_1);
+    int len2 = get_length(link_2);
+    int i, j=0;
+
+    //以link_2为比较基准，比较两个链表元素，插入到link_2
+    for (i = 0; i < len1; i++) {
+
+        for (; j < len2; ) {
+            if (p_cur_1->data <= p_cur_2->data && p_cur_2->next != NULL) { //插入元素到link_2
+                printf("合并中链表000000\n");
+                printf("\n");
+                insert_element(link_2, j+1, p_cur_1->data);
+                //重置计数器j, link_2长度
+                j++;
+                len2 = get_length(link_2);
+                traverse_linklist(link_2);
+                break;
+            }else if (p_cur_1->data > p_cur_2->data && p_cur_2->next != NULL) {
+                j++;
+                p_cur_2 = p_cur_2->next;
+                continue;
+            }else {
+                if(p_cur_2->next != NULL) {
+                    printf("合并中链表11111111\n");
+                    printf("\n");
+
+                    LinkList p_new = (LinkList)malloc(sizeof(Node));
+                    if (p_new == NULL) {
+                        printf("内存分配失败，程序退出！\n");
+                        exit(-1);
+                    }
+                    p_new->data = p_cur_1->data;
+                    p_new->next = p_cur_2->next;
+                    p_cur_2->next = p_new;
+
+                    printf("1111计数器i: %d\n", i);
+                    printf("1111计数器j: %d\n", j);
+                    printf("link_2长度#####: %d\n", len2);
+                    printf("$$$$$$p_cur_1->data: %d\n", p_cur_1->data);
+                    printf("$$$$$$p_cur_2->data: %d\n", p_cur_2->data);
+                    traverse_linklist(link_2);
+                } else {
+                    printf("合并中链表2222\n");
+                    insert_element(link_2, len2, p_cur_1->data);
+                    printf("2222计数器i: %d\n", i);
+                    printf("2222计数器j: %d\n", j);
+                    printf("link_2长度#####: %d\n", len2);
+                    printf("$$$$$$p_cur_1->data: %d\n", p_cur_1->data);
+                    printf("$$$$$$p_cur_2->data: %d\n", p_cur_2->data);
+                    traverse_linklist(link_2);
+                }
+                len2 = get_length(link_2);
+                p_cur_2 = p_cur_2->next;
+                break;
+            }
+
+        }
+        p_cur_1 = p_cur_1->next;
+    }
+
+    return link_2;
+
+}
+
+
+// len1 3, len2 2
+//1, 2, 3
+//1, 2, 3
+
+//i: 0, j: 0,   1   1, 1, 2, 3,     j++ : 1
+//i: 1, j: 1,   2   1, 1, 2, 3      j++ : 2
+//i: 2, j: 2,
+
 
 /**
- *
+ * Check linklist is empty or not
  * @param p_head
- * @return
+ * @return true empty, false not empty
  */
 bool is_empty(LinkList p_head)
 {

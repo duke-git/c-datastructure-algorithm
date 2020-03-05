@@ -18,7 +18,8 @@ void do_command()
     do
     {
         printf("==============================操作选择==============================\n");
-        printf("1.创建列表\t2.遍历链表\t3.查找链表元素\n4.插入链表元素\t5.删除链表元素\t6.排序链表\n7.反置链表\t8.删除链表倒数第n个元素\n");
+        printf("1.创建列表\t2.遍历链表\t3.查找链表元素\n4.插入链表元素\t5.删除链表元素\t6.排序链表\n"
+               "7.反置链表\t8.删除链表倒数第n个元素\t9.合并两个有序链表\n");
         printf("==============================操作选择==============================\n");
 
         printf("请输入你的选择:");
@@ -93,6 +94,21 @@ void do_command()
                 scanf("%d", &index);
                 delete_after_n(p_head, index);
                 traverse_linklist(p_head);
+                break;
+            }
+            case 9:
+            {
+                printf("创建第一个有序链表: \n");
+                LinkList link_1 = create_linklist();
+                printf("创建第二个有序链表: \n");
+                LinkList link_2 = create_linklist();
+                printf("合并前两个链表: \n");
+                traverse_linklist(link_1);
+                traverse_linklist(link_2);
+                printf("开始合并有序链表: \n");
+                LinkList sorted_link = merge_sorted_link(link_1, link_2);
+                printf("合并后链表: \n");
+                traverse_linklist(sorted_link);
                 break;
             }
 
