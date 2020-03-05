@@ -19,7 +19,7 @@ void do_command()
     {
         printf("==============================操作选择==============================\n");
         printf("1.创建列表\t2.遍历链表\t3.查找链表元素\n4.插入链表元素\t5.删除链表元素\t6.排序链表\n"
-               "7.反置链表\t8.删除链表倒数第n个元素\t9.合并两个有序链表\n");
+               "7.反置链表\t8.删除链表倒数第n个元素\t9.合并两个有序链表\t10.获取链表中间节点\n");
         printf("==============================操作选择==============================\n");
 
         printf("请输入你的选择:");
@@ -109,6 +109,20 @@ void do_command()
                 LinkList sorted_link = merge_sorted_link(link_1, link_2);
                 printf("合并后链表: \n");
                 traverse_linklist(sorted_link);
+                break;
+            }
+            case 10:
+            {
+                printf("创建链表: \n");
+                LinkList link = create_linklist();
+                printf("链表长度: %d\n", get_length(link));
+
+                LinkList middle_node = get_middle_node(link);
+                if (middle_node != NULL) {
+                    printf("链表中间节点: %d\n", middle_node->data);
+                } else {
+                    printf("链表不存在中间节点\n");
+                }
                 break;
             }
 

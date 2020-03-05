@@ -397,7 +397,29 @@ LinkList merge_sorted_link(LinkList link_1, LinkList link_2)
 //i: 1, j: 1,   2   1, 1, 2, 3      j++ : 2
 //i: 2, j: 2,
 
+/**
+ * Get the middle node of linklist
+ * @param p_head
+ * @return
+ */
+LinkList get_middle_node(LinkList p_head) {
 
+    if (p_head->next == NULL) {
+        return NULL;
+    }
+
+    if (p_head->next->next == NULL) {
+        return p_head->next;
+    }
+
+    int len = get_length(p_head);
+    int index = len / 2 + 1;
+
+    while (index--) {
+        p_head = p_head->next;
+    }
+    return p_head;
+}
 /**
  * Check linklist is empty or not
  * @param p_head

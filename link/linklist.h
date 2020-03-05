@@ -31,4 +31,6 @@ LinkList delete_after_n(LinkList p_head, int n);
 
 LinkList merge_sorted_link(LinkList link_1, LinkList link_2);
 
+LinkList get_middle_node(LinkList p_head);
+
 #endif
