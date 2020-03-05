@@ -412,13 +412,30 @@ LinkList get_middle_node(LinkList p_head) {
         return p_head->next;
     }
 
-    int len = get_length(p_head);
-    int index = len / 2 + 1;
+    //快慢指针法
+    LinkList p_fast = p_head;
+    LinkList p_slow = p_head;
 
-    while (index--) {
-        p_head = p_head->next;
+    while (p_fast != NULL) {
+        p_fast = p_fast->next;
+
+        if (p_fast != NULL) {
+            p_slow = p_slow->next;
+            p_fast = p_fast->next;
+        } else {
+            return p_slow;
+        }
     }
-    return p_head;
+
+    return p_slow;
+    //长度减半法
+//    int len = get_length(p_head);
+//    int index = len / 2 + 1;
+//
+//    while (index--) {
+//        p_head = p_head->next;
+//    }
+//    return p_head;
 }
 /**
  * Check linklist is empty or not
