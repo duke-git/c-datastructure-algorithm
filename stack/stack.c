@@ -69,6 +69,7 @@ DataType pop(Stack s)
 {
     if (is_empty(s) == true) {
         printf("栈为空！\n");
+        return -1;
     }
     DataType data = get_top_element(s);
     Stack pop_node = s->next;
@@ -125,7 +126,23 @@ bool is_empty(Stack s)
  */
 void empty_stack(Stack s)
 {
-
+    if (is_empty(s) == true) {
+        printf("栈为空！\n");
+    }
+    while (s->next != NULL) {
+        Stack node = s->next;
+        s->next = s->next->next;
+        free(node);
+    }
+    printf("清空栈成功\n");
 }
 
+/**
+ *
+ * @param s
+ */
+void delete_stack(Stack s)
+{
+    free(s);
+}
 
