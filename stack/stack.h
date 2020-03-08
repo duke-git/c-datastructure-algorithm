@@ -25,4 +25,6 @@ int pop(Stack s);
 DataType get_top_element(Stack s);
 
 int get_stack_size(Stack s);
+
+void traverse_stack(Stack s);
 #endif

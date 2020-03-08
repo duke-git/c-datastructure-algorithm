@@ -21,6 +21,24 @@ Stack create_stack()
 }
 
 /**
+ * Traverse stack
+ * @param s
+ */
+void traverse_stack(Stack s) {
+    if (is_empty(s) == true) {
+        printf("栈为空\n");
+    }
+    int index = 0;
+
+    while (s->next != NULL) {
+        index++;
+        printf("栈第%d个元素：%d\n", index, s->next->data);
+        s = s->next;
+    }
+}
+
+
+/**
  * Push element into stack
  * @param s
  * @return
@@ -101,5 +119,13 @@ bool is_empty(Stack s)
     }
 }
 
+/**
+ * Make stack empty
+ * @param s
+ */
+void empty_stack(Stack s)
+{
+
+}
 
 
