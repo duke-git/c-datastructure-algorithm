@@ -20,7 +20,7 @@ bool is_empty(Stack s);
 
 bool push(Stack s, DataType data);
 
-int pop(Stack s);
+DataType pop(Stack s);
 
 DataType get_top_element(Stack s);
 

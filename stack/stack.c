@@ -61,7 +61,7 @@ bool push(Stack s, DataType data)
 
 
 /**
- * pop element of stack
+ * Pop element of stack
  * @param s
  * @return
  */
