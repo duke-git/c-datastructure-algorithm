@@ -430,12 +430,73 @@ LinkList get_middle_node(LinkList p_head) {
     return p_slow;
     //长度减半法
 //    int len = get_length(p_head);
-//    int index = len / 2 + 1;
+//    int middle_len = len / 2;
 //
-//    while (index--) {
+//    while (middle_len > 0) {
 //        p_head = p_head->next;
+//        middle_len--;
 //    }
 //    return p_head;
+}
+
+/**
+ * Delete selected node of linklist
+ * @param p_head
+ * @param node
+ */
+bool delete_selected_node(LinkList p_head, LinkList selected_node)
+{
+    if (p_head == NULL || p_head->next == NULL) {
+        printf("链表为空\n");
+        return false;
+    }
+    //如果删除的是最后一个节点，需要遍历整个链表
+    if (selected_node->next == NULL) {
+        LinkList p_tmp = p_head;
+        while (p_tmp->next != selected_node) {
+            p_tmp = p_tmp->next;
+        }
+        p_tmp->next = NULL;
+    } else {
+        //1，找到删除节点的下一个节点
+        //2，将下一个节点的数据赋值给删除节点的数据
+        //3，将下一个节点删除
+        LinkList p_selected_next = selected_node->next;
+        selected_node->data = p_selected_next->data;
+        selected_node->next = p_selected_next->next;
+        free(p_selected_next);
+    }
+
+    return true;
+
+}
+
+/**
+ * is cross link
+ * @param p_head
+ * @return
+ */
+bool is_cross_link(LinkList p_head)
+{
+    if (p_head == NULL || p_head->next == NULL) {
+        printf("链表为空\n");
+        return false;
+    }
+
+    //快慢指针法
+    LinkList p_fast = p_head;
+    LinkList p_slow = p_head;
+
+    while (p_fast != NULL && p_fast->next != NULL) {
+        p_fast = p_fast->next->next;
+        p_slow = p_slow->next;
+
+        if (p_fast->data == p_slow->data) {
+            return true;
+        }
+    }
+
+    return false;
 }
 /**
  * Check linklist is empty or not

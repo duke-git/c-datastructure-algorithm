@@ -33,4 +33,8 @@ LinkList merge_sorted_link(LinkList link_1, LinkList link_2);
 
 LinkList get_middle_node(LinkList p_head);
 
+bool delete_selected_node(LinkList p_head, LinkList node);
+
+bool is_cross_link(LinkList p_head);
+
 #endif
