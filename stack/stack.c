@@ -28,11 +28,14 @@ void traverse_stack(Stack s) {
     if (is_empty(s) == true) {
         printf("栈为空\n");
     }
-    int index = 0;
 
+    printf("当前栈内元素: ");
     while (s->next != NULL) {
-        index++;
-        printf("栈第%d个元素：%d\n", index, s->next->data);
+        if (s->next->next == NULL) {
+            printf("%d", s->next->data);
+        }else {
+            printf("%d-->", s->next->data);
+        }
         s = s->next;
     }
 }
