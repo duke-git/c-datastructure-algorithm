@@ -17,4 +17,8 @@ void insert_sort(int a[], int n);
 
 void select_sort(int a[], int n);
 
+void generate_int_array(int a[], int length);
+
+void benchmark_sort(void (*sort_func1) (int a[], int n), void (*sort_func2) (int a[], int n));
+
 #endif

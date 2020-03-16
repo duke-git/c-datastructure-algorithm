@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <time.h>
 #include "sort.h"
 
 /**
@@ -91,8 +92,52 @@ void select_sort(int a[], int n) {
             }
         }
 
-        tmp = a[i];
-        a[i] = a[min_index];
-        a[min_index] = tmp;
+        if (min_index != i) {
+            tmp = a[i];
+            a[i] = a[min_index];
+            a[min_index] = tmp;
+        }
     }
+}
+
+/**
+ * 生成元素为1-200的随机数组
+ * @param length
+ */
+void generate_int_array(int a[], int length)
+{
+    srand((unsigned)time(NULL));
+
+    for (int i = 0; i < length; i++){
+        int value = rand() % 200 + 1;
+        a[i] = value;
+    }
+}
+
+/**
+ * 排序函数benchmark
+ * benchmark基准：数组元素数量为一万，值为1-200
+ * @param sort_func1, sort_func2
+ */
+void benchmark_sort(void (*sort_func1) (int a[], int n), void (*sort_func2) (int a[], int n))
+{
+    int length = 10000;//2000000;
+    int a[10000];
+    generate_int_array(a, length);
+
+    clock_t start, finish;
+    double total_time;
+    start = clock();
+    sort_func1(a, length);
+    finish = clock();
+    total_time = (double)(finish - start) / CLOCKS_PER_SEC;
+    printf("执行函数%s所用时间: %f\n", "sort_func1", total_time);
+
+    clock_t start2, finish2;
+    double total_time2;
+    start2 = clock();
+    sort_func2(a, length);
+    finish2 = clock();
+    total_time2 = (double)(finish2 - start2) / CLOCKS_PER_SEC;
+    printf("执行函数%s所用时间: %f\n", "sort_func2", total_time2);
 }

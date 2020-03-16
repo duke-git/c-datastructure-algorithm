@@ -19,7 +19,7 @@ void do_command()
     int choice;
     do {
         printf("\n==============================操作选择==============================\n");
-        printf("1.冒泡排序\t2.插入排序\t3.选择排序\n4.快速排序\n");
+        printf("1.冒泡排序\t2.插入排序\t3.选择排序\t4.快速排序\t5.排序函数benchmark\n");
         printf("==============================操作选择==============================\n");
 
         printf("请输入你的选择:");
@@ -49,6 +49,12 @@ void do_command()
                 print_result(a, n, 0);
                 select_sort(a, n);
                 print_result(a, n, 1);
+                break;
+            }
+            case 5:
+            {
+                printf("排序函数benchmark: bubble_sort vs insert_sort\n");
+                benchmark_sort(bubble_sort, insert_sort);
                 break;
             }
             default: printf("输入错误，请重新输入\n");
