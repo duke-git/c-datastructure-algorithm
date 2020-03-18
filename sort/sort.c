@@ -188,6 +188,7 @@ void merge(int a[], int start, int middle, int end)
  * space: O(n)
  * @param a array tobe sorted
  * @param n length of array
+ * https://blog.csdn.net/a236209186/article/details/52012823
  */
 void quick_sort(int a[], int n)
 {
