@@ -17,8 +17,14 @@ void insert_sort(int a[], int n);
 
 void select_sort(int a[], int n);
 
+void merge_sort(int a[], int n);
+
+void quick_sort(int a[], int n);
+
+//void copy_n(int dest[], int src[], int start, int n);
+
 void generate_int_array(int a[], int length);
 
-void benchmark_sort(void (*sort_func1) (int a[], int n), void (*sort_func2) (int a[], int n));
+double benchmark_sort(void (*sort_func1) (int a[], int n), int a[], int length);
 
 #endif

@@ -2,8 +2,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 #include <time.h>
 #include "sort.h"
+
+void merge(int a[], int start, int middle, int end);
+
+void merge_sort_recursion(int a[], int start, int end);
+
+void copy_n(int dest[], int src[], int start, int n);
+
 
 /**
  * bubble sort (stable)
@@ -101,6 +109,98 @@ void select_sort(int a[], int n) {
 }
 
 /**
+ * merge sort (stable)
+ * worst: O(nlogn)
+ * best: O(nlogn)
+ * average: O(nlogn)
+ * space: O(n)
+ * @param a array tobe sorted
+ * @param n length of array
+ */
+void merge_sort(int a[], int n)
+{
+    merge_sort_recursion(a, 0, n-1);
+}
+
+/**
+ * 归并排序（递归）
+ * @param a
+ * @param start
+ * @param end
+ */
+void merge_sort_recursion(int a[], int start, int end)
+{
+    if (start < end) {
+        int middle = (start + end) / 2;
+        merge_sort_recursion(a, start, middle);
+        merge_sort_recursion(a, middle + 1, end);
+
+        merge(a, start, middle, end);
+    }
+}
+
+
+/**
+ * 合并有序子序列
+ * @param a
+ * @param start
+ * @param middle
+ * @param end
+ */
+void merge(int a[], int start, int middle, int end)
+{
+    int len_left = middle - start + 1;
+    int len_right = end - middle;
+
+    int temp_left[len_left], temp_right[len_right];
+    memcpy(temp_left, a + start, sizeof(int) * len_left);
+    memcpy(temp_right, a + middle + 1, sizeof(int) * len_right);
+
+    int i = 0, j = 0, index = start;
+
+    while (i < len_left && j < len_right) {
+        if (temp_left[i] < temp_right[j]) {
+            a[index++] = temp_left[i++];
+        }else {
+            a[index++] = temp_right[j++];
+        }
+    }
+
+    while (i < len_left) {
+        a[index++] = temp_left[i++];
+    }
+
+}
+
+/**
+ *
+ * @param a
+ * @param n
+ */
+void quick_sort(int a[], int n)
+{
+
+}
+/**
+ * 数组拷贝(从start开始，复制n个src元素到dest中)
+ * @param dest
+ * @param src
+ * @param start (start from 0)
+ * @param n
+ */
+void copy_n(int dest[], int src[], int start, int n)
+{
+    int dest_index, src_index = start;
+
+    for (dest_index = 0; dest_index < n; dest_index++) {
+        dest[dest_index] = src[src_index];
+        if (src[src_index] != 0) {
+            src_index++;
+        }
+    }
+}
+
+/**
  * 生成元素为1-200的随机数组
  * @param length
  */
@@ -114,30 +214,48 @@ void generate_int_array(int a[], int length)
     }
 }
 
+//**
+// * 排序函数benchmark
+// * benchmark基准：数组元素数量为一万，值为1-200
+// * @param sort_func1, sort_func2
+// */
+//void benchmark_sort(void (*sort_func1) (int a[], int n), void (*sort_func2) (int a[], int n))
+//{
+//    int length = 10000;//2000000;
+//    int a[10000];
+//    generate_int_array(a, length);
+//
+//    clock_t start, finish;
+//    double total_time;
+//    start = clock();
+//    sort_func1(a, length);
+//    finish = clock();
+//    total_time = (double)(finish - start) / CLOCKS_PER_SEC;
+//    printf("执行函数%s所用时间: %f\n", "sort_func1", total_time);
+//
+//    clock_t start2, finish2;
+//    double total_time2;
+//    start2 = clock();
+//    sort_func2(a, length);
+//    finish2 = clock();
+//    total_time2 = (double)(finish2 - start2) / CLOCKS_PER_SEC;
+//    printf("执行函数%s所用时间: %f\n", "sort_func2", total_time2);
+//}
+
+
 /**
  * 排序函数benchmark
  * benchmark基准：数组元素数量为一万，值为1-200
- * @param sort_func1, sort_func2
+ * @param sort_func
  */
-void benchmark_sort(void (*sort_func1) (int a[], int n), void (*sort_func2) (int a[], int n))
+double benchmark_sort(void (*sort_func) (int a[], int n), int a[], int length)
 {
-    int length = 10000;//2000000;
-    int a[10000];
-    generate_int_array(a, length);
-
     clock_t start, finish;
     double total_time;
     start = clock();
-    sort_func1(a, length);
+    sort_func(a, length);
     finish = clock();
     total_time = (double)(finish - start) / CLOCKS_PER_SEC;
-    printf("执行函数%s所用时间: %f\n", "sort_func1", total_time);
 
-    clock_t start2, finish2;
-    double total_time2;
-    start2 = clock();
-    sort_func2(a, length);
-    finish2 = clock();
-    total_time2 = (double)(finish2 - start2) / CLOCKS_PER_SEC;
-    printf("执行函数%s所用时间: %f\n", "sort_func2", total_time2);
+    return total_time;
 }
