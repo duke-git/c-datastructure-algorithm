@@ -25,6 +25,6 @@ void quick_sort(int a[], int n);
 
 void generate_int_array(int a[], int length);
 
-double benchmark_sort(void (*sort_func1) (int a[], int n), int a[], int length);
+double benchmark_sort(void (*sort_func) (int a[], int n));
 
 #endif

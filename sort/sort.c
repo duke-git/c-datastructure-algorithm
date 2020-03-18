@@ -358,8 +358,11 @@ void generate_int_array(int a[], int length)
  * benchmark基准：数组元素数量为一万，值为1-200
  * @param sort_func
  */
-double benchmark_sort(void (*sort_func) (int a[], int n), int a[], int length)
+double benchmark_sort(void (*sort_func) (int a[], int n))
 {
+    int length = 10000;//2000000;
+    int a[10000];
+    generate_int_array(a, length);
     clock_t start, finish;
     double total_time;
     start = clock();

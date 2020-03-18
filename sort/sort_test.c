@@ -6,6 +6,8 @@ void do_command();
 void print_benchmark_result();
 void print_result(int a[], int n, int flag);
 
+void generate_desc_order_array(int a[], int len, int base);
+
 int main()
 {
     do_command();
@@ -14,8 +16,13 @@ int main()
 
 void do_command()
 {
-    int a[] = {5, 6, 4, 7, 9, 10, 3, 1, 2, 8};
     int n = 10;
+    int a[10];
+
+
+//    int n = 100;
+//    int a[100];
+//    generate_desc_order_array(a, n, 100);
 
     int choice;
     do {
@@ -33,6 +40,7 @@ void do_command()
                 break;
             case 1:
             {
+                generate_int_array(a, n);
                 print_result(a, n, 0);
                 bubble_sort(a, n);
                 print_result(a, n, 1);
@@ -40,6 +48,7 @@ void do_command()
             }
             case 2:
             {
+                generate_int_array(a, n);
                 print_result(a, n, 0);
                 insert_sort(a, n);
                 print_result(a, n, 1);
@@ -47,6 +56,7 @@ void do_command()
             }
             case 3:
             {
+                generate_int_array(a, n);
                 print_result(a, n, 0);
                 select_sort(a, n);
                 print_result(a, n, 1);
@@ -54,6 +64,7 @@ void do_command()
             }
             case 4:
             {
+                generate_int_array(a, n);
                 print_result(a, n, 0);
                 merge_sort(a, n);
                 print_result(a, n, 1);
@@ -61,6 +72,7 @@ void do_command()
             }
             case 5:
             {
+                generate_int_array(a, n);
                 print_result(a, n, 0);
                 merge_sort(a, n);
                 print_result(a, n, 1);
@@ -81,25 +93,21 @@ void do_command()
 
 void print_benchmark_result()
 {
-    int length = 10000;
-    int a[10000];
-    generate_int_array(a, length);
-
     printf("--------------|-----------------|----------------\n");
 
     printf("Sort function |  Execution time |  Time complexity\n");
 
     printf("--------------|-----------------|----------------\n");
 
-    printf("%s   | %9.6f       | %s\n", "bubble sort", benchmark_sort(bubble_sort, a, length), "O(n^2)");
+    printf("%s   | %9.6f       | %s\n", "bubble sort", benchmark_sort(bubble_sort), "O(n^2)");
 
-    printf("%s   | %9.6f       | %s\n", "insert sort", benchmark_sort(insert_sort, a, length), "O(n^2)");
+    printf("%s   | %9.6f       | %s\n", "insert sort", benchmark_sort(insert_sort), "O(n^2)");
 
-    printf("%s   | %9.6f       | %s\n", "select sort", benchmark_sort(select_sort, a, length), "O(n^2)");
+    printf("%s   | %9.6f       | %s\n", "select sort", benchmark_sort(select_sort), "O(n^2)");
 
-    printf("%s    | %9.6f       | %s\n", "merge sort", benchmark_sort(merge_sort, a, length), "O(nlogn)");
+    printf("%s    | %9.6f       | %s\n", "merge sort", benchmark_sort(merge_sort), "O(nlogn)");
 
-    printf("%s    | %9.6f       | %s\n", "quick sort", benchmark_sort(quick_sort, a, length), "O(nlogn)");
+    printf("%s    | %9.6f       | %s\n", "quick sort", benchmark_sort(quick_sort), "O(nlogn)");
 
     printf("--------------|-----------------|----------------\n");
 }
@@ -117,5 +125,13 @@ void print_result(int a[], int n, int flag)
         } else {
             printf("%d, ", a[i]);
         }
+    }
+}
+
+void generate_desc_order_array(int a[], int len, int base)
+{
+    for (int i = 0; i < len; i++) {
+        a[i] = base;
+        base--;
     }
 }
