@@ -10,6 +10,14 @@ void merge(int a[], int start, int middle, int end);
 
 void merge_sort_recursion(int a[], int start, int end);
 
+void quick_sort_recursion(int a[], int start, int end);
+
+int partition(int a[], int start, int end);
+
+void swap(int arr[], int a, int b);
+
+void quick_sort_3_path(int data[], int left, int right);
+
 void copy_n(int dest[], int src[], int start, int n);
 
 
@@ -173,14 +181,116 @@ void merge(int a[], int start, int middle, int end)
 }
 
 /**
- *
- * @param a
- * @param n
+ * quick sort (unstable)
+ * worst: O(nlogn)
+ * best: O(nlogn)
+ * average: O(nlogn)
+ * space: O(n)
+ * @param a array tobe sorted
+ * @param n length of array
  */
 void quick_sort(int a[], int n)
 {
-
+//    quick_sort_recursion(a, 0, n-1);
+    quick_sort_3_path(a, 0, n-1);
 }
+
+
+/**
+ *
+ * @param a
+ * @param start
+ * @param end
+ */
+void quick_sort_recursion(int a[], int start, int end)
+{
+    if (start < end) {
+        int pivot = partition(a, start, end);
+        quick_sort_recursion(a, start, pivot-1);
+        quick_sort_recursion(a, pivot+1, end);
+    }
+}
+
+/**
+ * 交换索引
+ * @param arr
+ * @param a
+ * @param b
+ */
+void swap(int arr[], int a, int b)
+{
+    int temp;
+    temp = arr[a];
+    arr[a] = arr[b];
+    arr[b] = temp;
+}
+
+/**
+ * 三路快排
+ * @param a
+ * @param start
+ * @param end
+ * @return
+ * https://www.jianshu.com/p/c61d1e82c44b
+ */
+void quick_sort_3_path(int data[], int left, int right)
+{
+    if (left < right) {
+        float pivot = data[right];
+        int l = left - 1;
+        int j = left;
+        int r = right;
+        /*
+        [left, l] 小于pivot
+        [l+1, j] 等于pivot
+        [j+1, right] 大于pivot
+        */
+        while (j < r) {
+            if (data[j] < pivot) {
+                swap(data, j, ++l);
+                j++;
+            }
+            else if (data[j] > pivot) {
+                swap(data, j, --r);
+            }else {
+                j++;
+            }
+        }
+        swap(data, j, right);
+        quick_sort_3_path(data, left, l);
+        quick_sort_3_path(data, j+1, right);
+    }
+}
+
+/**
+ *
+ * @param a
+ * @param start
+ * @param end
+ * @return
+ */
+int partition(int a[], int start, int end)
+{
+    int pivot = a[end];
+    int i = start;
+
+    for (int j = start; j < end; ++j) {
+        if (a[j] < pivot) {
+            int temp = a[i];
+            a[i] = a[j];
+            a[j] = temp;
+            i++;
+        }
+    }
+
+    int tmp = a[i];
+    a[i] = a[end];
+    a[end] = tmp;
+
+    return i;
+}
+
+
 /**
  * 数组拷贝(从start开始，复制n个src元素到dest中)
  * @param dest

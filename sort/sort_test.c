@@ -61,10 +61,9 @@ void do_command()
             }
             case 5:
             {
-//                print_result(a, n, 0);
-//                merge_sort(a, n);
-//                print_result(a, n, 1);
-
+                print_result(a, n, 0);
+                merge_sort(a, n);
+                print_result(a, n, 1);
                 break;
             }
             case 6:
@@ -100,7 +99,7 @@ void print_benchmark_result()
 
     printf("%s    | %9.6f       | %s\n", "merge sort", benchmark_sort(merge_sort, a, length), "O(nlogn)");
 
-//    printf("%s  | %9.2lf     | %s\n", "quick sort", benchmark_sort(merge_sort, a, length), "O(nlogn)");
+    printf("%s    | %9.6f       | %s\n", "quick sort", benchmark_sort(quick_sort, a, length), "O(nlogn)");
 
     printf("--------------|-----------------|----------------\n");
 }
