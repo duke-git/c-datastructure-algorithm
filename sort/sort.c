@@ -1,10 +1,7 @@
-
-#include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
 #include <time.h>
-#include "sort.h"
 
 void merge(int a[], int start, int middle, int end);
 
@@ -355,7 +352,7 @@ void generate_int_array(int a[], int length)
 
 /**
  * 排序函数benchmark
- * benchmark基准：数组元素数量为一万，值为1-200
+ * benchmark基准：数组元素数量为10000，值为1-200
  * @param sort_func
  */
 double benchmark_sort(void (*sort_func) (int a[], int n))
