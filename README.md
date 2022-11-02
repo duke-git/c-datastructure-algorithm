@@ -1,6 +1,6 @@
 # c-datastructres-algorithms
 # c99
-Basic datastructre and algrithms implement by c
+Basic datastructure and algrithms implement by c
 ## compile
 Take the link for example:
 
